@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitores</title>
+
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <a class="navbar-brand" href="/">Biblioteca</a>
+
+    <button class="navbar-toggler" type="button"
+            data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/livros/">Livros</a></li>
+            <li class="nav-item"><a class="nav-link" href="/autor/">Autor</a></li>
+            <li class="nav-item"><a class="nav-link" href="/cidade/">Cidade</a></li>
+            <li class="nav-item"><a class="nav-link" href="/editora/">Editora</a></li>
+            <li class="nav-item"><a class="nav-link" href="/reserva/">Reserva</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Tabela de Leitores</h2>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Cidade</th>
+                <th>Data Cadastro</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for leitor in leitores %}
+            <tr>
+                <td>{{ leitor.nome }}</td>
+                <td>{{ leitor.cpf }}</td>
+                <td>{{ leitor.email }}</td>
+                <td>{{ leitor.telefone }}</td>
+                <td>{{ leitor.cidade }}</td>
+                <td>{{ leitor.data_cadastro }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

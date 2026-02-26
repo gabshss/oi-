@@ -1,61 +1,77 @@
-# Create your views here.
-from django.shortcuts import render,redirect,get_object_or_404
-from .models import* 
+from django.shortcuts import render
+from .models import Autor, Cidade, Editora, Reserva, Livro, Leitor
 from django.views import View
 from django.contrib import messages
-
-class IndexView(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'index.html')
-    def post(self,request):
-        pass
-
-from django.shortcuts import render,redirect,get_object_or_404
-from .models  import *
-from django.views import View
+from django.shortcuts import redirect
 
 
+def index(request):
+    livros = Livro.objects.all().order_by('nome')[:5]
+    return render(request, 'index.html', {'livros': livros})
 
 
-class IndexView(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'index.html')
+def livros(request):
+    lista_livros = Livro.objects.all().order_by('nome')
+    return render(request, 'livros.html', {'livros': lista_livros})
 
 
-class LivrosView(View):
-    def get(self, request, *args, **kwargs):
-        livros = Livro.objects.all()
-        return render(request, 'livros.html', {'livros': livros})
-#   def post(self, request, *args, **kwargs):  
-   
-#class  EmprestimoView(View):
-#    def get(self, request, *args, **kwargs):
-#        reservas = Emprestimo.objects.all()
-#        return render(request, 'reserva.html', {'reservas': reservas})
-
-class CidadesView(View):
-    def get(self, request, *args, **kwargs):
-        cidades = Cidade.objects.all()
-        return render(request, 'cidade.html', {'cidades': cidades})
+def autor(request):
+    lista_autores = Autor.objects.all().order_by('nome')
+    return render(request, 'autor.html', {'autores': lista_autores})
 
 
-class AutoresView(View):
-    def get(self, request, *args, **kwargs):
-        autores = Autor.objects.all()
-        return render(request, 'autor.html', {'autores': autores})
+def cidade(request):
+    lista_cidades = Cidade.objects.all().order_by('nome')
+    return render(request, 'cidade.html', {'cidades': lista_cidades})
 
 
-class EditorasView(View):
-    def get(self, request, *args, **kwargs):
-        editoras = Editora.objects.all()
-        return render(request, 'editora.html', {'editoras': editoras})
-   
-class LeitoresView(View):
-    def get(self, request, *args, **kwargs):
-        leitores = Leitor.objects.all()
-        return render(request, 'leitor.html', {'leitores': leitores})
-   
-class GenerosView(View):
-    def get(self, request, *args, **kwargs):
-        generos = Genero.objects.all()
-        return render(request, 'genero.html', {'generos': generos})
+def editora(request):
+    lista_editoras = Editora.objects.all().order_by('nome')
+    return render(request, 'editora.html', {'editoras': lista_editoras})
+
+
+def reserva(request):
+    lista_reservas = Reserva.objects.all().order_by('-data_reserva')
+    return render(request, 'reserva.html', {'reservas': lista_reservas})
+
+
+def leitor(request):
+    lista_leitores = Leitor.objects.all().order_by('nome')
+    return render(request, 'leitor.html', {'leitores': lista_leitores})
+
+
+class DeleteLivroView(View):
+    def get(self, request, id, *args, **kwargs):
+        livro = Livro.objects.get(id=id)
+        livro.delete()
+        messages.success(request, 'Livro excluído com sucesso!')
+        return redirect('livros')
+    
+from .forms import LivroForm
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib import messages
+
+class EditarLivroView(View):
+    template_name = 'editar_livro.html'
+
+    def get(self, request, id, *args, **kwargs):
+        livro = get_object_or_404(Livro, id=id)
+        form = LivroForm(instance=livro)
+        return render(request, self.template_name, {
+            'livro': livro,
+            'form': form
+        })
+
+    def post(self, request, id, *args, **kwargs):
+        livro = get_object_or_404(Livro, id=id)
+        form = LivroForm(request.POST, instance=livro)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Livro atualizado com sucesso!')
+            return redirect('editar', id=id)
+
+        return render(request, self.template_name, {
+            'livro': livro,
+            'form': form
+        })

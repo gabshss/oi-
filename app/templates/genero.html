@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas</title>
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <a class="navbar-brand" href="/">Biblioteca</a>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Tabela de Reservas</h2>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Livro</th>
+                <th>Leitor</th>
+                <th>Data da Reserva</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for reserva in reservas %}
+            <tr>
+                <td>{{ reserva.livro }}</td>
+                <td>{{ reserva.leitor }}</td>
+                <td>{{ reserva.data_reserva }}</td>
+                <td>{{ reserva.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
