@@ -4,7 +4,7 @@ URL configuration for config project.
 
 from django.contrib import admin
 from django.urls import path
-from app.views import index, livros, autor, cidade, editora, reserva, leitor, DeleteLivroView,EditarLivroView
+from app.views import *
 
 
 urlpatterns = [
@@ -19,5 +19,7 @@ urlpatterns = [
     path('editora/', editora, name='editora'),
     path('reserva/', reserva, name='reserva'),
     path('leitor/', leitor, name='leitor'),
+    path('genero/', genero, name='genero'),
+
     path('editar/<int:id>/', EditarLivroView.as_view(), name='editar'),
 ]

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Autor, Cidade, Editora, Reserva, Livro, Leitor
+from .models import *
 from django.views import View
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -38,7 +38,9 @@ def reserva(request):
 def leitor(request):
     lista_leitores = Leitor.objects.all().order_by('nome')
     return render(request, 'leitor.html', {'leitores': lista_leitores})
-
+def genero(request):
+    genero = Genero.objects.all().order_by('nome')
+    return render(request, 'genero.html', {'generos': genero})
 
 class DeleteLivroView(View):
     def get(self, request, id, *args, **kwargs):
