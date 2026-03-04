@@ -39,7 +39,6 @@ class GeneroAdmin(admin.ModelAdmin):
     search_fields = ('nome',)
 
 
-
 @admin.register(Reserva)
 class ReservaAdmin(admin.ModelAdmin):
     list_display = ('livro', 'leitor', 'data_reserva', 'status')
