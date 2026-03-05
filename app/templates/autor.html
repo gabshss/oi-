@@ -62,8 +62,6 @@
         <thead class="thead-dark">
             <tr>
                 <th>Nome</th>
-                <th>Nacionalidade</th>
-                <th>Data de Nascimento</th>
             </tr>
         </thead>
 
@@ -71,8 +69,6 @@
             {% for autor in autores %}
             <tr>
                 <td>{{ autor.nome }}</td>
-                <td>{{ autor.nacionalidade }}</td>
-                <td>{{ autor.data_nascimento }}</td>
             </tr>
             {% endfor %}
         </tbody>

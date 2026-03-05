@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from .models import *
-from django.views import View
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.views import View
+
+from .models import Livro, Autor, Cidade, Editora, Reserva, Leitor, Genero
+from .forms import LivroForm
 
 
 def index(request):
@@ -38,20 +39,20 @@ def reserva(request):
 def leitor(request):
     lista_leitores = Leitor.objects.all().order_by('nome')
     return render(request, 'leitor.html', {'leitores': lista_leitores})
+
+
 def genero(request):
-    genero = Genero.objects.all().order_by('nome')
-    return render(request, 'genero.html', {'generos': genero})
+    lista_generos = Genero.objects.all().order_by('nome')
+    return render(request, 'genero.html', {'generos': lista_generos})
+
 
 class DeleteLivroView(View):
     def get(self, request, id, *args, **kwargs):
-        livro = Livro.objects.get(id=id)
+        livro = get_object_or_404(Livro, id=id)
         livro.delete()
         messages.success(request, 'Livro excluído com sucesso!')
         return redirect('livros')
-    
-from .forms import LivroForm
-from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib import messages
+
 
 class EditarLivroView(View):
     template_name = 'editar_livro.html'
